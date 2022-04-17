@@ -23,3 +23,5 @@ require (
 	golang.org/x/text v0.3.7 // indirect; require
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )
+
+require github.com/joho/godotenv v1.4.0

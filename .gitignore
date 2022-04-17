@@ -1,2 +1,4 @@
 .idea
 .env
+posts/.env
+posts/go_app

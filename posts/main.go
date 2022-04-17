@@ -4,17 +4,18 @@ import (
 	"database/sql"
 	"encoding/json"
 	"github.com/go-playground/validator"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
 
 const (
-	DbDataSource = "host=db user=root password=pgpwd4habr dbname=app sslmode=disable"
-	HttpPort     = "8887"
+	HttpPort = "8887"
 )
 
 type Post struct {
@@ -38,7 +39,7 @@ type ErrorResponse struct {
 var validate *validator.Validate
 
 func getDbConnection() (db *sql.DB) {
-	db, err := sql.Open("postgres", DbDataSource)
+	db, err := sql.Open("postgres", getDbConnectSource())
 	if err != nil {
 		log.Fatal("Failed to open a DB connection: ", err)
 	}
@@ -60,6 +61,24 @@ func decorateErrorParams(err error) (errors []ErrorParams) {
 		errors = append(errors, ErrorParams{Key: err.Field(), Value: err.Value()})
 	}
 	return
+}
+
+func goDotEnvVariable(key string) string {
+
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
+}
+
+func getDbConnectSource() string {
+	return "host=db user=" + goDotEnvVariable("DB_USER") +
+		" password=" + goDotEnvVariable("DB_PW") +
+		" dbname=" + goDotEnvVariable("DB_NAME") +
+		" sslmode=disable"
 }
 
 func main() {
