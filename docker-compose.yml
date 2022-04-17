@@ -8,7 +8,7 @@ services:
       - "8889:8887"
     volumes:
       - ./posts:/app
-      - ./.env:/app/.env
+      - ./.env:/app/build.env
   db:
     image: postgres:12.9
     environment:
