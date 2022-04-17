@@ -1,4 +1,4 @@
 .idea
 .env
-posts/.env
-posts/go_app
+posts/build/.env
+posts/build/go_app
