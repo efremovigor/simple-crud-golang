@@ -4,6 +4,6 @@ echo "Build app"
 
 cd /app
 go mod download
-go build -o /app/go_app
+go build -o /app/build/go_app
 echo "Running app"
-exec /app/go_app
+exec /app/build/go_app

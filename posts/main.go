@@ -65,7 +65,7 @@ func decorateErrorParams(err error) (errors []ErrorParams) {
 
 func goDotEnvVariable(key string) string {
 
-	err := godotenv.Load(".env")
+	err := godotenv.Load("./build/.env")
 
 	if err != nil {
 		log.Fatalf("Error loading .env file")
