@@ -1,6 +1,6 @@
 # Instruction
 
-1. Make .env like .env_example
+1. cp .env_example .env
 2. docker-compose up -d
 3. Load `127.0.0.1:8889/posts`
 
