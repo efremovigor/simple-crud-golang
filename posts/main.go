@@ -134,7 +134,7 @@ func main() {
 		db := getDbConnection()
 		defer db.Close()
 
-		sqlStatement := `INSERT INTO posts (name, created_at, updated_at) VALUES ($1, $2, $3) RETURNING id`
+		sqlStatement := `INSERT INTO posts (name, created_at, updated_at, deleted) VALUES ($1, $2, $3, false ) RETURNING id`
 		err = db.QueryRow(sqlStatement, p.Name, p.CreatedAt, p.UpdatedAt).Scan(&p.Id)
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, "Unknown error")
