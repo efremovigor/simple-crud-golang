@@ -1,16 +1,17 @@
-package main
+package web
 
 import (
 	"encoding/json"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
+	dbModel "go_app/db/model"
 	"net/http"
 	"strconv"
 )
 
 var validate *validator.Validate
 
-func runWebServer(port string) {
+func RunWebServer(port string) {
 	e := echo.New()
 	validate = validator.New()
 
@@ -28,21 +29,21 @@ func runWebServer(port string) {
 }
 
 func deletePostHandler(context echo.Context) error {
-	post, deleteError := getPost(context.Param("post-id"))
+	post, deleteError := dbModel.GetPost(context.Param("post-id"))
 	if deleteError != nil {
 		return echo.NewHTTPError(http.StatusNotFound, deleteError.Error())
 	}
-	post.remove()
+	post.Remove()
 	return context.JSON(http.StatusOK, new(interface{}))
 }
 
 func updatePostHandler(context echo.Context) error {
-	post, err := getPost(context.Param("post-id"))
+	post, err := dbModel.GetPost(context.Param("post-id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusNotFound, "Not found")
 	}
 
-	form := newPost()
+	form := dbModel.NewPost()
 	decodeErr := json.NewDecoder(context.Request().Body).Decode(&form)
 	if decodeErr != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, decodeErr.Error())
@@ -57,13 +58,13 @@ func updatePostHandler(context echo.Context) error {
 	}
 
 	post.Name = form.Name
-	_ = post.savePost()
+	_ = post.SavePost()
 
 	return context.JSON(http.StatusOK, post)
 }
 
 func addPostHandler(context echo.Context) error {
-	post := newPost()
+	post := dbModel.NewPost()
 	decodeErr := json.NewDecoder(context.Request().Body).Decode(&post)
 	if decodeErr != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, decodeErr.Error())
@@ -77,7 +78,7 @@ func addPostHandler(context echo.Context) error {
 		)
 	}
 
-	if err != post.savePost() {
+	if err != post.SavePost() {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Unknown error")
 	}
 
@@ -85,7 +86,7 @@ func addPostHandler(context echo.Context) error {
 }
 
 func getPostHandler(context echo.Context) error {
-	post, err := getPost(context.Param("post-id"))
+	post, err := dbModel.GetPost(context.Param("post-id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusNotFound, "Not found")
 	}
@@ -105,7 +106,7 @@ func getPostsHandler(context echo.Context) error {
 		page = 0
 	}
 
-	posts, err := getPosts(page, limit)
+	posts, err := dbModel.GetPosts(page, limit)
 
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Unknown error")

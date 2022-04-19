@@ -1,4 +1,4 @@
-package main
+package env
 
 import (
 	"github.com/joho/godotenv"
@@ -8,7 +8,7 @@ import (
 
 const envPath = "./build/.env"
 
-func goDotEnvVariable(key string) string {
+func GetEnvVariable(key string) string {
 
 	err := godotenv.Load(envPath)
 

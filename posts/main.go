@@ -1,7 +1,9 @@
 package main
 
+import "go_app/web"
+
 const HttpPort = "8887"
 
 func main() {
-	runWebServer(HttpPort)
+	web.RunWebServer(HttpPort)
 }
