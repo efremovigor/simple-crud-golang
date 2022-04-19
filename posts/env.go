@@ -6,9 +6,11 @@ import (
 	"os"
 )
 
+const envPath = "./build/.env"
+
 func goDotEnvVariable(key string) string {
 
-	err := godotenv.Load("./build/.env")
+	err := godotenv.Load(envPath)
 
 	if err != nil {
 		log.Fatalf("Error loading .env file")
