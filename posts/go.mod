@@ -1,4 +1,4 @@
-module go_app
+module simple-crud-golang
 
 go 1.18
 

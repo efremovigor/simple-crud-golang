@@ -3,8 +3,8 @@ package db
 import (
 	"database/sql"
 	_ "github.com/lib/pq"
-	"go_app/env"
 	"log"
+	"simple-crud-golang/env"
 )
 
 const DatetimeLayer = "2006-01-02 15:04:05.999999"

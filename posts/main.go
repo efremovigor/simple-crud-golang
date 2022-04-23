@@ -1,6 +1,6 @@
 package main
 
-import "go_app/web"
+import "simple-crud-golang/web"
 
 const HttpPort = "8887"
 

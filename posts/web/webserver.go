@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
-	dbModel "go_app/db/model"
 	"net/http"
+	dbModel "simple-crud-golang/db/model"
 	"strconv"
 )
 

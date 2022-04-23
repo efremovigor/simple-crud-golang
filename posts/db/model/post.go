@@ -1,7 +1,7 @@
 package model
 
 import (
-	"go_app/db"
+	"simple-crud-golang/db"
 	"time"
 )
 
